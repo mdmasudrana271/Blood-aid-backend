@@ -1,0 +1,6 @@
+env
+
+blood_aid/.env
+
+db.sqlite3
+__pycache__/
