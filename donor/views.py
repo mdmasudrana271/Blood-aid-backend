@@ -84,6 +84,7 @@ class UserRegistrationApiView(APIView):
             print(user)
             token = default_token_generator.make_token(user)
             print("token ", token)
+            models.Donor.objects.create(user=user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             print("uid ", uid)
             confirm_link = f"http://127.0.0.1:8000/account/active/{uid}/{token}"
@@ -126,7 +127,11 @@ class UserLoginApiView(APIView):
                 print(token)
                 print(_)
                 login(request, user)
-                donor = models.Donor.objects.get(user=user);
+                # donor = models.Donor.objects.get(user=user);
+                try:
+                    donor = models.Donor.objects.get(user=user)
+                except models.Donor.DoesNotExist:
+                    donor = None
                 return Response({
                     'token': token.key,
                     'user_id': user.id,

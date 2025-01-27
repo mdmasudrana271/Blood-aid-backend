@@ -12,14 +12,26 @@ class EventViewset(viewsets.ModelViewSet):
     serializer_class = serializers.EventSerializer
 
 
+class EventListAPIView(APIView):
+    def get(self, request):
+        blood_group = request.query_params.get('blood_group', None)
+
+        event = models.Event.objects.all()
+
+        
+        if blood_group:
+            blood_group = blood_group.strip()  # Remove extra spaces
+            event = event.filter(blood_group__iexact=blood_group)
+
+        
+        serializer = serializers.EventSerializer(event, many=True)
+        return Response(serializer.data)
+
+
 
 class EventCreateAPIView(APIView):
     serializer_class = serializers.EventSerializer
     permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
-
-
-
-   
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
