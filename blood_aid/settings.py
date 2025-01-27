@@ -63,10 +63,11 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-
+SRF_TRUSTED_ORIGINS = ['https://blood-aid-backend.onrender.com','https://*.127.0.0.1']
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # React app
+    "http://localhost:5173",
+    "http://127.0.0.1:5173", 
 ]
 
 ROOT_URLCONF = 'blood_aid.urls'
