@@ -87,7 +87,7 @@ class UserRegistrationApiView(APIView):
             models.Donor.objects.create(user=user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             print("uid ", uid)
-            confirm_link = f"https://blood-aid-backend.onrender.com/account/active/{uid}/{token}"
+            confirm_link = f"https://blood-aid-backend.vercel.app/account/active/{uid}/{token}"
             email_subject = "Confirm Your Email"
             email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
             
@@ -108,9 +108,9 @@ def activate(request, uid64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('https://blood-aid-client.onrender.com/login')
+        return redirect('https://blood-aid-client.vercel.app/login')
     else:
-        return redirect('https://blood-aid-client.onrender.com/signup')
+        return redirect('https://blood-aid-client.vercel.app/signup')
     
 
 class UserLoginApiView(APIView):
