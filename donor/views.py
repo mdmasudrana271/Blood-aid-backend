@@ -87,7 +87,7 @@ class UserRegistrationApiView(APIView):
             models.Donor.objects.create(user=user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             print("uid ", uid)
-            confirm_link = f"https://blood-aid-backend.vercel.app/account/active/{uid}/{token}"
+            confirm_link = f"https://blood-aid-backend.onrender.com/account/active/{uid}/{token}"
             email_subject = "Confirm Your Email"
             email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
             
