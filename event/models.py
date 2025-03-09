@@ -23,6 +23,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     blood_group = models.CharField(max_length=3, choices=BLOOD_GROUP_CHOICES)
+    address = models.CharField(max_length=500,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
 

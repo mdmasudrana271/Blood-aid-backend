@@ -15,6 +15,7 @@ class EventViewset(viewsets.ModelViewSet):
 class EventListAPIView(APIView):
     def get(self, request):
         blood_group = request.query_params.get('blood_group', None)
+        address = request.query_params.get('address', None)
 
         event = models.Event.objects.all()
 
@@ -22,6 +23,12 @@ class EventListAPIView(APIView):
         if blood_group:
             blood_group = blood_group.strip()  # Remove extra spaces
             event = event.filter(blood_group__iexact=blood_group)
+
+        if address:
+            address = address.strip()  # Remove extra spaces
+            event = event.filter(address__icontains=address)
+        
+        event = event.filter(status="pending")
 
         
         serializer = serializers.EventSerializer(event, many=True)

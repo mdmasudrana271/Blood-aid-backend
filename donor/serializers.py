@@ -42,13 +42,14 @@ class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
+        fields = ['username', 'first_name', 'last_name', 'email','phone', 'password', 'confirm_password']
     
     def save(self):
         username = self.validated_data['username']
         first_name = self.validated_data['first_name']
         last_name = self.validated_data['last_name']
         email = self.validated_data['email']
+        phone = self.validated_data['phone']
         password = self.validated_data['password']
         confirm_password = self.validated_data['confirm_password']
         
@@ -56,7 +57,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'error' : "Password Doesn't Mactched"})
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({'error' : "Email Already exists"})
-        account = User(username = username, email=email, first_name = first_name, last_name = last_name)
+        account = User(username = username, email=email,phone=phone, first_name = first_name, last_name = last_name)
         print(account)
         account.set_password(password)
         account.is_active = False

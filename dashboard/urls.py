@@ -8,5 +8,6 @@ router.register('list', views.UserDonationHistoryViewSet,basename='user-donation
 urlpatterns = [
     path('', include(router.urls)),
     path('create/', views.CreateDonationHistoryAPIView.as_view(), name='create'),
+    path('donor-donation-history/', views.DonorDonationHistory.as_view(), name='donor-donation-history'),
     
 ]

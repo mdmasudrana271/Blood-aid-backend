@@ -13,6 +13,7 @@ BLOOD_GROUP_CHOICES = [
 class Donor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="donor_profile")
     age = models.IntegerField(null=True, blank=True)
+    phone = models.CharField(max_length=15, unique=True, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True)
     last_donation_date = models.DateField(null=True, blank=True)
     is_available_for_donation = models.BooleanField(default=True)

@@ -32,6 +32,7 @@ class DonorViewset(viewsets.ModelViewSet):
 class DonorListAPIView(APIView):
     def get(self, request):
         blood_group = request.query_params.get('blood_group', None)
+        address = request.query_params.get('address', None)
 
         donors = models.Donor.objects.filter(is_available_for_donation=True)
 
@@ -40,6 +41,9 @@ class DonorListAPIView(APIView):
             blood_group = blood_group.strip()  # Remove extra spaces
             donors = donors.filter(blood_group__iexact=blood_group)
 
+        if address:
+            address = address.strip()  # Remove extra spaces
+            donors = donors.filter(address__icontains=address)
         
         serializer = serializers.DonorSerializer(donors, many=True)
         return Response(serializer.data)
