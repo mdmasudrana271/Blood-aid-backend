@@ -40,6 +40,7 @@ class DonorSerializer(serializers.ModelSerializer):
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
+    phone = serializers.CharField(write_only=True)
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email','phone', 'password', 'confirm_password']
